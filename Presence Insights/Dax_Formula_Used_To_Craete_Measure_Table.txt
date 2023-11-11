@@ -1,0 +1,21 @@
+
+All DAX Formulas -
+
+#Used in Measure Table
+Total Working Days = var totaldays= COUNT('Final Data'[Value])   var totalnonworkdays= CALCULATE(COUNT('Final Data'[Value]),'Final Data'[Value] in {"WO", "HO"}) Return totaldays - totalnonworkdays     
+
+#Used in Final Data Table
+WH Count =  SWITCH(True(), 'Final Data'[Value]="WFH",1, 'Final Data'[Value]="HWFH",0.5,0)
+
+#Used in Measure Table
+WFH COUNT = SUM( 'Final Data'[WH Count])
+
+#Used in Measure Table
+Present Days = var PresentDays= CALCULATE(COUNT('Final Data'[Value]),'Final Data'[Value] in {"P"}) Return PresentDays + [WFH COUNT]
+
+#Used in Final Data Table
+Month = STARTOFMONTH('Final Data'[Date])
+#change the format on the column tools - "mmm yy"
+
+#Used in Final Data Table
+Day Of The Week = FORMAT('Final Data'[Date], "ddd")
